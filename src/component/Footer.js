@@ -10,7 +10,7 @@ const FooterContainer = styled.div`
 const Footer = () => {
     return (
         <FooterContainer>
-            ©2022 Hanameee Corp. All rights reserved.
+            ©2023 B8angho Corp. All rights reserved.
         </FooterContainer>
     );
 };
