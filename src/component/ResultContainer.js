@@ -1,10 +1,8 @@
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
+import React, { Suspense, useState } from 'react';
 import ImageCard from './ImageCard';
-import ImageModal from './ImageModal';
-import Pagination from './Pagination';
-import EmptyResult from './EmptyResult';
-import getWallPapers from '../api/getWallPapers';
+
+const ImageModal = React.lazy(() => import('./ImageModal'));
 
 const Container = styled.div`
     max-width: 1830px;
@@ -20,24 +18,21 @@ const ResultsWrapper = styled.div`
     width: 100%;
 `;
 
-const ResultContainer = ({ data, page, setPage, numOfPages }) => {
+const ResultContainer = ({ data }) => {
     const [currentImageDetail, setCurrentImageDetail] = useState(null);
     return (
         <Container>
             {/* ImgCard 클릭 시 해당 이미지의 정보로 ImageModal이 나타나야 합니다. */}
-            {currentImageDetail && (
-                <ImageModal
-                    currentImageDetail={currentImageDetail}
-                    setCurrentImageDetail={setCurrentImageDetail}
-                />
-            )}
-            {/* {data.hits?.length > 0 && (
-                <Pagination
-                    page={page}
-                    setPage={setPage}
-                    numOfPages={numOfPages}
-                />
-            )} */}
+            {/* React.lazy를 활용 해 코드 분할 */}
+            <Suspense fallback={<h1>로딩중...</h1>}>
+                {currentImageDetail && (
+                    <ImageModal
+                        currentImageDetail={currentImageDetail}
+                        setCurrentImageDetail={setCurrentImageDetail}
+                    />
+                )}
+            </Suspense>
+
             <ResultsWrapper>
                 {data.hits?.length > 0 &&
                     data.hits?.map((imgData, idx) => (

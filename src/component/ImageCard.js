@@ -15,6 +15,7 @@ const Img = styled.img`
     border-radius: 4px;
 `;
 
+// webformatURL을 previewURL로 저해상도로 바꾸어 LCP 개선 가능
 const ImageCard = ({ imgData, onClick }) => {
     const { webformatURL, id } = imgData;
     return (
